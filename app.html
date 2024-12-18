@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riddle Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+    <script>
+        const riddles = [
+            { question: "What has to be broken before you can use it?", answer: "an egg" },
+            { question: "I’m tall when I’m young, and I’m short when I’m old. What am I?", answer: "a candle" },
+            { question: "What can travel around the world while staying in the same corner?", answer: "a stamp" },
+            { question: "What has a head, a tail, is brown, and has no legs?", answer: "a penny" },
+            { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+            { question: "What has many keys but can’t open a single lock?", answer: "a piano" },
+            { question: "What has an eye but can’t see?", answer: "a needle" },
+            { question: "What gets wetter the more it dries?", answer: "a towel" },
+            { question: "What belongs to you, but others use it more?", answer: "your name" },
+            { question: "I have hands, but no arms. What am I?", answer: "a clock" }
+        ];
+
+        let currentRiddleIndex = null;
+
+        function generateNewRiddle() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * riddles.length);
+            } while (randomIndex === currentRiddleIndex);
+            
+            currentRiddleIndex = randomIndex;
+            const riddle = riddles[randomIndex];
+            document.getElementById('riddle').innerText = riddle.question;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('answer-feedback').innerText = '';
+        }
+
+        function checkAnswer() {
+            if (currentRiddleIndex !== null) {
+                const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
+                const correctAnswer = riddles[currentRiddleIndex].answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    alert("Correct! Great job!");
+                } else {
+                    alert(`Incorrect. The correct answer is: ${riddles[currentRiddleIndex].answer}`);
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="generateNewRiddle()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Maria "MJ" Barragán</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="scratch.html">Hobbies</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-primary text-white text-center py-3">
+        <h1>Riddle Generator</h1>
+    </header>
+
+    <main class="container text-center my-4">
+        <p id="riddle" class="fs-4"></p>
+        <div class="mb-3">
+            <input type="text" id="answer-input" class="form-control w-50 mx-auto" placeholder="Type your answer here">
+        </div>
+        <button class="btn btn-primary me-2" onclick="checkAnswer()">Submit Answer</button>
+        <button class="btn btn-secondary" onclick="generateNewRiddle()">Generate New Riddle</button>
+        <p id="answer-feedback" class="text-success fs-5 mt-3"></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Maria "MJ" Barragán</p>
+    </footer>
+</body>
+</html>
